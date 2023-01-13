@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>votingForMe</title>
+  <link href="/css/bootstrap.css" rel="stylesheet">
+  <script src="/jquery-3.6.1.min.js"></script>
+  <script>
+    function getVotingName(){
+      let a = $("#votingId");
+      for(let i = 0;i < a.length;i++){
+        let aa = a[i];
+        let url = "/votingId?votingId="+aa.textContent;
+        $.get(url,function (data,status){
+          if(status == "success"){
+            aa.textContent = data["name"];
+          }else{
+            console.log("error");
+          }
+        })
+        console.log(aa.textContent);
+      }
+    }
+  </script>
+</head>
+<body onload="getVotingName()">
+<div class="row text-center" id="header">
+  <h1>欢迎登录投票系统</h1>
+</div>
+
+<div id="container">
+  <div class="row">
+    <div class="col-12">
+      <div id="content">
+
+        <h2>已经参与的投票</h2>
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">投票名称</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="m:${votingSlipPage}">
+            <td th:text="${m.votingId}"></td>
+            <td id="votingId" th:text="${m.votingId}"></td>
+          </tr>
+        </table>
+
+        <form action="/votingSlipByPage" method="post">
+              <label>
+                请输入页数
+                <select class="form-select" name="number"
+                        aria-label="Default select example">
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                </select>
+              </label>
+          <button class="btn btn-outline-success form-control" type="submit">确定</button>
+        </form>
+
+        <form action="/votedResults" method="post">
+          <div class="form-floating mb-3">
+            <input class="form-control" id="i1" type="number" name="votingId" placeholder="xxx">
+            <label for="i1">请输入需要查看的投票活动编号:</label>
+          </div>
+          <div class="form-floating ">
+            <button class="btn btn-outline-success form-control" type="submit">确定</button>
+          </div>Controller
+        </form>
+
+        <form action="/joinVoting" method="get">
+          <div class="form-floating mb-3">
+            <input class="form-control" id="i2" type="number" name="votingId" placeholder="xxx">
+            <label for="i2">请输入需要参加的投票活动编号:</label>
+          </div>
+          <div class="form-floating ">
+            <button class="btn btn-outline-success form-control" type="submit">确定</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

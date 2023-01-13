@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>loading</title>
+  <link href="/css/bootstrap.css" rel="stylesheet">
+  <script src="/jquery-3.6.1.min.js"></script>
+  <script>
+    function submitForm(){
+      let a = $("#phone").val()
+      $("#phone1").val(a);
+      $("form").submit()
+    }
+  </script>
+  <script>
+    function sendVerification(){
+      let a = $("#phone");
+      let url = "/send?cellphone="+a.val();
+      $.get(url,function (data,status){
+        if(status == "success"){
+          a.textContent = data["code"];
+        }else{
+          console.log("error");
+        }
+      })
+      console.log(a.textContent);
+    }
+  </script>
+</head>
+
+<body>
+<div>
+
+  <div class="container text-center">
+    <h1 >欢迎使用投票系统</h1>
+  </div>
+
+  <div>
+    <h2>登  录</h2>
+    <p th:text="${error}"></p>
+
+    <div class="mb-3">
+      <label class="form-label">请输入手机号</label>
+      <input class="form-control" id="phone" name="cellphone" type="text" value="1258">
+    </div>
+    <button class="btn btn-primary" onclick="sendVerification()">获取验证码</button>
+    <form action="/checkVerificationCode"  method="post">
+      <div>
+        <input id="phone1" name="phone" type="hidden">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">请输入验证码</label>
+        <input class="form-control" name="code" type="text" value="123456">
+      </div>
+
+    </form>
+
+    <div>
+      <button class="btn btn-success" onclick="submitForm()">确认</button>
+    </div>
+  </div>
+</div>
+</body>
+
+
+</html>
+

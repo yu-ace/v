@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>votingIndex</title>
+    <link href="/css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+<div>
+
+    <div class="container text-center">
+        <h1>欢迎登录投票系统</h1>
+    </div>
+
+    <div id="container">
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <p th:text="${user.name}"></p>
+                </div>
+                <div id="menu">
+                    <div class="list-group">
+                        <b>功能选择</b>
+                        <a class="list-group-item list-group-item-action list-group-item-info"
+                           href="/joinedVoting">我参与的投票</a>
+                        <a class="list-group-item list-group-item-action list-group-item-info"
+                           href="/createVoting">我创建的投票</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
+

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>joinVoting</title>
+  <link href="/css/bootstrap.css" rel="stylesheet">
+  <script src="/jquery-3.6.1.min.js"></script>
+  <script>
+    function getVotingName(){
+      let a = $("#votingName").text();
+      $("#votingName1").val(a);
+    }
+  </script>
+  <script>
+    function getVotingName1(){
+      let a = $("#votingName").text();
+      $("#votingName2").val(a);
+    }
+  </script>
+  <script>
+    function cloneInput(){
+      let a = "请输入投票编号:<input class=\"votingId\" type=\"number\"/><br>";
+      $("#input").append(a);
+    }
+  </script>
+  <script>
+    function getContentId(){
+      let a = $(".votingId");
+      let b = "";
+      for(let i = 0;i < a.length;i++){
+        let aa = $(".votingId").eq(i).val();
+        if(aa != undefined){
+          b = b + aa + ","
+        }
+      }
+      $("#votingId").val(b);
+    }
+  </script>
+  <script>
+    function addCheckbox(){
+      let a = $(".id");
+      for(let i = 0;i < a.length;i++){
+        let aa = a[i];
+        let ag = '<td> <input type="checkbox" value="' + $(aa).text() + '"></td>';
+        $(aa).before(ag)
+      }
+    }
+  </script>
+</head>
+<body onload="addCheckbox()">
+<div class="row text-center" id="header">
+  <h1>欢迎登录投票系统</h1>
+</div>
+
+<div id="container">
+  <div class="row">
+    <div class="col-12">
+      <div id="content">
+        <p th:text="${tip}"></p>
+        <div hidden>
+          ID<p id="votingName" th:text="${voting.id}"></p>
+        </div>
+        <div>
+          投票名称<p id="votingName" th:text="${voting.name}"></p>
+        </div>
+        <div>
+          可选择<p th:text="${voting.count}">个投票</p>
+        </div>
+        <div>
+          投票描述<p th:text="${voting.description}"></p>
+        </div>
+
+          投票内容
+        <!--<table class="table">
+          <tbody>
+          <tr class="c1" th:each="m:${votingContent}">
+            <td class="id" th:text="${m.id}"></td>
+            <td  th:text="${m.content}"></td>
+          </tr>
+        </table>-->
+
+        <div th:each="m:${votingContent}">
+          <div>
+            <input type="checkbox" th:value="${m.id}"><span th:text="${m.content}"></span>
+          </div>
+
+        </div>
+
+        <div id="input" >
+          请输入投票编号:<input class="votingId" type="number">
+        </div>
+      </div>
+      <p class="btn btn-success" onclick="cloneInput()">添加内容框</p>
+      <div>
+
+        <form action="/vote" method="post">
+          <div>
+            <input id="votingId" hidden type="text" name="votingIdList">
+          </div>
+          <div class="form-floating ">
+            <button class="btn btn-outline-success form-control" onclick="getContentId()" type="submit">确定</button>
+          </div>
+        </form>
+
+        <form action="/results" method="post">
+          <input type="hidden" id="votingName2" name="name">
+          <div class="form-floating ">
+            <button class="btn btn-outline-success form-control"
+                    onclick="getVotingName1()" type="submit">投票结果</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>createVoting</title>
+  <link href="/css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+<div class="row text-center" id="header">
+  <h1>欢迎登录投票系统</h1>
+</div>
+
+<div id="container">
+  <div class="row">
+    <div class="col-12">
+      <div id="content">
+
+        <h2>创建的投票</h2>
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">投票名称</th>
+            <th scope="col">投票状态</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="m:${voting}">
+            <td th:text="${m.id}"></td>
+            <td th:text="${m.name}"></td>
+            <td th:text="${m.status}"></td>
+          </tr>
+        </table>
+
+        <form action="/votingByPage" method="post">
+          <label>
+            请输入页数
+            <select class="form-select" name="number"
+                    aria-label="Default select example">
+              <option value="0">1</option>
+              <option value="1">2</option>
+            </select>
+          </label>
+          <button class="btn btn-outline-success form-control" type="submit">确定</button>
+        </form>
+
+        <a class="list-group-item list-group-item-action list-group-item-info" href="/create">创建新的投票</a>
+        <a class="list-group-item list-group-item-action list-group-item-info" href="/votingIndex">返回首页</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

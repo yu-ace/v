@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>create</title>
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <script src="/jquery-3.6.1.min.js"></script>
+    <script>
+        function cloneInput(){
+            let a = "投票内容<input type=\"text\" name=\"content\" class=\"content\"/><br>";
+            $("#voting").append(a);
+        }
+    </script>
+
+    <script>
+        function getVoting(){
+            let voting = {};
+            voting.name = $("#name").val();
+            voting.description = $("#description").val();
+            voting.startTime = $("#startTime").val();
+            voting.endTime = $("#endTime").val();
+            voting.count = $("#count").val();
+
+            let a = $(".content");
+            let content = [];
+            for(let i = 0;i < a.length;i++){
+                content[i] = {"content":$(".content").eq(i).val()};
+            }
+            voting.contentList = content;
+
+            $.ajax({
+                url:"/createNewVoting2",
+                type: "post",
+                data:JSON.stringify(voting),
+                contentType:"application/json;charset=utf-8",
+                dataType:"application/json",
+                success:function (result){
+                    alert(result)
+                },
+                error:function (){
+                    alert("error")
+                }
+            })
+        }
+    </script>
+
+</head>
+<body>
+<div class="row text-center" id="header">
+    <h1>创建投票</h1>
+</div>
+
+<div id="container">
+    <div class="row">
+        <div class="col-12">
+            <div id="content">
+                <p th:text="${tip}"></p>
+                    <div>
+                        <label class="form-label">投票名称</label>
+                        <input type="text" id="name" class="form-control" >
+                    </div>
+                    <div>
+                        <label class="form-label">投票描述</label>
+                        <input type="text" id="description" class="form-control">
+                    </div>
+                    <div>
+                        <label class="form-label">投票内容</label>
+                        <input type="text" class="content">
+                    </div>
+                    <div>
+                        <label class="form-label">投票内容</label>
+                        <input type="text" class="content">
+                    </div>
+                    <div id="voting">
+                        投票内容<input type="text" name="content" class="content"><br>
+                    </div>
+                        <p class="btn btn-success" onclick="cloneInput()">添加内容框</p>
+                    <div>
+                        <label class="form-label">投票开始时间</label>
+                        <input type="datetime-local" step="1" id="startTime">
+                    </div>
+                    <div>
+                        <label class="form-label">投票结束时间</label>
+                        <input type="datetime-local" step="1" id="endTime">
+                    </div>
+                    <div>
+                        <label class="form-label">投票最多选择个数</label>
+                        <input type="number" id="count" class="form-control">
+                    </div>
+                    <button onclick="getVoting()" class="btn btn-success">确定</button>
+            </div>
+        </div>
+
+        <a class="list-group-item list-group-item-action list-group-item-info" href="/votingIndex">返回首页</a>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>results</title>
+  <link href="/css/bootstrap.css" rel="stylesheet">
+  <script src="/jquery-3.6.1.min.js"></script>
+  <script>
+    function getVotingName(){
+      let a = $("#votingName").text();
+      $("#votingName1").text(a);
+    }
+  </script>
+</head>
+<body onload="getVotingName()">
+<div class="row text-center" id="header">
+  <h1>欢迎登录投票系统</h1>
+</div>
+
+<div id="container">
+  <div class="row">
+    <div class="col-12">
+      <div id="content">
+        <div>
+          投票名称<p id="votingName" th:text="${voting.name}"></p>
+        </div>
+        <div>
+          可选择<p th:text="${voting.count}"></p>个投票
+        </div>
+        <div>
+          投票描述<p th:text="${voting.description}"></p>
+        </div>
+
+        投票结果
+        <table class="table">
+          <tbody>
+          <tr th:each="m:${votingContents}">
+            <td th:text="${m.id}"></td>
+            <td th:text="${m.content}"></td>
+            <td th:text="${m.count}"></td>
+          </tr>
+        </table>
+
+
+        <a class="list-group-item list-group-item-action list-group-item-info" href="/votingIndex">返回首页</a>
+        <a class="list-group-item list-group-item-action list-group-item-info" href="/login">退出</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
